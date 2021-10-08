@@ -1,14 +1,13 @@
 const hyttp = require("../src/index");
 
 (async() => {
-    let data = await hyttp.get({
+    let data = await hyttp.patch({
         url: 'https://hyrousek.tk',
-        method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ hello: 'test' })
+        body: JSON.stringify({ hello: 'te' })
     });
 
-    console.log(data.array())
+    console.log(data)
 })();

@@ -11,3 +11,5 @@
 npm install hyttpo
 yarn add hyttpo
 ```
+
+## Examples [here](https://github.com/Garlic-Team/hyttpo/tree/main/examples)

@@ -1,2 +1,2 @@
-module.exports = new (require('./hyttp.js'));
+module.exports = new (require('./hyttpo.js'));
 module.exports.default = module.exports;

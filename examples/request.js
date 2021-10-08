@@ -1,7 +1,7 @@
-const hyttp = require("../src/index");
+const hyttpo = require("../src/index");
 
 (async() => {
-    let data = await hyttp.request({
+    let data = await hyttpo.request({
         url: 'https://hyrousek.tk',
         method: 'GET'
     });

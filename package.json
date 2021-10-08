@@ -1,5 +1,5 @@
 {
-  "name": "hyttp",
+  "name": "hyttpo",
   "version": "0.1.0",
   "description": "A simple way to send requests",
   "main": "src/index.js",

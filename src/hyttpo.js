@@ -4,7 +4,7 @@ const zlib = require('zlib')
 const { responseRefactor } = require('./utils');
 const Response = require('./structures/Response');
 
-class Hyttp {
+class Hyttpo {
     request(data) {
         if(typeof data !== 'object') throw Error('It must be an object!');
         return this.#rawRequest(data)
@@ -116,4 +116,4 @@ class Hyttp {
     }
 }
 
-module.exports = Hyttp;
+module.exports = Hyttpo;

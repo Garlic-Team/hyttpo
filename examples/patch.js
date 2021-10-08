@@ -1,7 +1,7 @@
-const hyttp = require("../src/index");
+const hyttpo = require("../src/index");
 
 (async() => {
-    let data = await hyttp.patch({
+    let data = await hyttpo.patch({
         url: 'https://hyrousek.tk',
         headers: {
             'Content-Type': 'application/json'

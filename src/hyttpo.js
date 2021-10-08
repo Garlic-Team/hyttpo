@@ -82,7 +82,10 @@ class Hyttpo {
 
                 if(data.responseType === 'stream') {
                     response.data = stream;
-                    resolve(new Response(response));
+                    
+                    let final = new Response(response);
+                    if (final.ok) resolve(final);
+                    else reject(final);
                 } else {
                     let buffer = [];
 
@@ -103,7 +106,10 @@ class Hyttpo {
                         }
 
                         response.data = buffer;
-                        resolve(new Response(response));
+
+                        let final = new Response(response);
+                        if (final.ok) resolve(final);
+                        else reject(final);
                     })
                 }
             })

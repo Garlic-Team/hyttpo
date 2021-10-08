@@ -1,6 +1,6 @@
 {
   "name": "hyttpo",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A simple way to send requests",
   "main": "src/index.js",
   "typings": "typings/index.d.ts",

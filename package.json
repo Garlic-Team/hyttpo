@@ -1,0 +1,10 @@
+{
+  "name": "hyttp",
+  "version": "0.1.0",
+  "description": "A simple way to send requests",
+  "main": "src/index.js",
+  "typings": "typings/index.d.ts",
+  "keywords": [],
+  "author": "Hyro",
+  "license": "MIT"
+}

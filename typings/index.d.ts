@@ -1,5 +1,5 @@
-declare module 'hyttp' {
-    export class Hyttp {
+declare module 'hyttpo' {
+    export class Hyttpo {
         public request(data: PayloadRequest | string): Response;
         public get(data: PayloadMethod | string): Response;
         public post(data: PayloadMethod | string): Response;

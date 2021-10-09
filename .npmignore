@@ -1,2 +1,6 @@
 # Examples
 examples/
+
+babel.config.js
+build.js
+src/

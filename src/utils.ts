@@ -1,5 +1,5 @@
 class Util {
-    static isJSON(data) {
+    static isJSON(data): boolean {
         if (typeof data !== 'string') return false;
         try {
             const result = JSON.parse(data);
@@ -21,4 +21,4 @@ class Util {
     }
 }
 
-module.exports = Util;
+export default Util;

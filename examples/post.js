@@ -1,4 +1,4 @@
-const hyttpo = require("../src/index");
+const hyttpo = require("hyttpo");
 
 (async() => {
     let data = await hyttpo.post({

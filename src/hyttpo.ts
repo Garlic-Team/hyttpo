@@ -1,44 +1,41 @@
-const https = require('https');
-const http = require('http');
-const zlib = require('zlib')
-const { responseRefactor } = require('./utils');
-const Response = require('./structures/Response');
+import * as https from 'https';
+import * as http from 'http';
+import * as zlib from 'zlib';
+import Utils from './utils';
+import Response from './structures/Response';
+const methods = ['GET', 'POST', 'PATCH', 'PUT', 'TRACE', 'HEAD', 'OPTIONS', 'CONNECT', 'DELETE'];
+
+type PayloadMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'TRACE' | 'HEAD' | 'OPTIONS' | 'CONNECT' | 'DELETE';
+type ResponseType = 'stream' | 'arraybuffer' | 'buffer' | 'text';
+interface PayloadRequest {
+    method: PayloadMethod;
+    url: string;
+    body?: object | string;
+    responseType?: ResponseType;
+    headers?: object;
+}
 
 class Hyttpo {
-    request(data) {
+    constructor() {
+        methods.forEach(method => {
+            this[method.toLocaleLowerCase()] = (data) => {
+                if(typeof data === 'string') data = { url: data };
+
+                return this.rawRequest({ method: method, ...data })
+            }
+        })
+    }
+
+    request(data: PayloadRequest): Promise<Response> {
         if(typeof data !== 'object') throw Error('It must be an object!');
-        return this.#rawRequest(data)
+        return this.rawRequest(data)
     }
 
-    get(data) {
-        if(typeof data === 'string') data = { url: data };
-
-        return this.#rawRequest({ method: 'GET', ...data })
-    }
-
-    post(data) {
-        if(typeof data === 'string') data = { url: data };
-
-        return this.#rawRequest({ method: 'POST', ...data })
-    }
-
-    patch(data) {
-        if(typeof data === 'string') data = { url: data };
-
-        return this.#rawRequest({ method: 'PATCH', ...data })
-    }
-
-    delete(data) {
-        if(typeof data === 'string') data = { url: data };
-
-        return this.#rawRequest({ method: 'DELETE', ...data })
-    }
-
-    #rawRequest(data) {
+    rawRequest(data): Promise<Response> {
         return new Promise((resolve, reject) => {
             let url = new URL(data.url);
-            let request = url.protocol === 'https:' ? https : http;
-            let method = data.method.toLowerCase();
+            let request: any = url.protocol === 'https:' ? https : http;
+            let method: PayloadMethod = data.method.toUpperCase();
     
             let body = typeof data.body === 'object' ? JSON.stringify(data.body) : data.body || '{}';
 
@@ -46,8 +43,8 @@ class Hyttpo {
             if (!headers['Accept']) headers['Accept'] = 'application/json, text/plain, */*';
             if (!headers['User-Agent']) headers['User-Agent'] = 'riso/nodejs'
     
-            if(['post', 'patch'].includes(method)) request = request.request;
-            else request = request[method];
+            if(['POST', 'PATCH'].includes(method)) request = request.request;
+            else request = request[method.toLowerCase()];
 
             let requestOptions = {
                 path: `${url.pathname}${url.search}`,
@@ -77,7 +74,8 @@ class Hyttpo {
                     request: res,
                     status: res.statusCode,
                     statusText: res.statusMessage,
-                    headers: res.headers
+                    headers: res.headers,
+                    data: null
                 }
 
                 if(data.responseType === 'stream') {
@@ -87,7 +85,7 @@ class Hyttpo {
                     if (final.ok) resolve(final);
                     else reject(final);
                 } else {
-                    let buffer = [];
+                    let buffer: any = [];
 
                     stream.on('data', (chunk) => {
                         buffer.push(chunk);
@@ -102,7 +100,7 @@ class Hyttpo {
                         buffer = Buffer.concat(buffer);
 
                         if (!['arraybuffer', 'buffer'].includes(data.responseType)) {
-                            buffer = responseRefactor(buffer);
+                            buffer = Utils.responseRefactor(buffer);
                         }
 
                         response.data = buffer;
@@ -114,7 +112,7 @@ class Hyttpo {
                 }
             })
 
-            if(body && method !== 'get') {
+            if(body && method !== 'GET') {
                 req.write(body);
                 req.end();
             }
@@ -122,4 +120,4 @@ class Hyttpo {
     }
 }
 
-module.exports = Hyttpo;
+export default Hyttpo;

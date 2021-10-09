@@ -34,7 +34,7 @@ class Hyttpo {
     rawRequest(data): Promise<Response> {
         return new Promise((resolve, reject) => {
             let url = new URL(data.url);
-            let isHttps: boolean = !!(url.protocol === 'https');
+            let isHttps: boolean = !!(url.protocol === 'https:');
 
             let request: any = isHttps ? https : http;
             let method: PayloadMethod = data.method.toUpperCase();
@@ -48,7 +48,7 @@ class Hyttpo {
             if(['POST', 'PATCH'].includes(method)) request = request.request;
             else request = request[method.toLowerCase()];
 
-            let agent = isHttps ? data.httpsAgent : data.httpAgent
+            let agent = isHttps ? data.httpsAgent || data.agent : data.httpAgent || data.agent
 
             let requestOptions = {
                 path: `${url.pathname}${url.search}`,
@@ -56,7 +56,6 @@ class Hyttpo {
                 headers: headers,
                 hostname: url.hostname,
                 port: url.port,
-                agents: { https: data.httpsAgent, http: data.httpAgent },
                 agent: agent
             }
 

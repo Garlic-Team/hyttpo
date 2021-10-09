@@ -34,7 +34,9 @@ class Hyttpo {
     rawRequest(data): Promise<Response> {
         return new Promise((resolve, reject) => {
             let url = new URL(data.url);
-            let request: any = url.protocol === 'https:' ? https : http;
+            let isHttps: boolean = !!(url.protocol === 'https');
+
+            let request: any = isHttps ? https : http;
             let method: PayloadMethod = data.method.toUpperCase();
     
             let body = typeof data.body === 'object' ? JSON.stringify(data.body) : data.body || '{}';
@@ -46,12 +48,16 @@ class Hyttpo {
             if(['POST', 'PATCH'].includes(method)) request = request.request;
             else request = request[method.toLowerCase()];
 
+            let agent = isHttps ? data.httpsAgent : data.httpAgent
+
             let requestOptions = {
                 path: `${url.pathname}${url.search}`,
                 method: method,
                 headers: headers,
                 hostname: url.hostname,
-                port: url.port
+                port: url.port,
+                agents: { https: data.httpsAgent, http: data.httpAgent },
+                agent: agent
             }
 
             let req = request(requestOptions, (res) => {
@@ -110,6 +116,11 @@ class Hyttpo {
                         else reject(final);
                     })
                 }
+            })
+
+            req.on('error', (error) => {
+                if (req.aborted && error.code !== 'ERR_FR_TOO_MANY_REDIRECTS') return;
+                reject(error);
             })
 
             if(body && method !== 'GET') {

@@ -1,4 +1,4 @@
-const hyttpo = require("hyttpo");
+const hyttpo = require("hyttpo").default;
 
 (async() => {
     let data = await hyttpo.get('https://hyrousek.tk');

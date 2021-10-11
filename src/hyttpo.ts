@@ -39,13 +39,13 @@ class Hyttpo {
             let request: any = isHttps ? https : http;
             let method: PayloadMethod = data.method.toUpperCase();
     
-            let body = typeof data.body === 'object' ? JSON.stringify(data.body) : data.body || '{}';
+            let body = data.body;
 
             let headers = data.headers || {};
             if (!headers['Accept']) headers['Accept'] = 'application/json, text/plain, */*';
             if (!headers['User-Agent']) headers['User-Agent'] = 'riso/nodejs'
     
-            if(['POST', 'PATCH'].includes(method)) request = request.request;
+            if(['POST', 'PATCH', 'PUT', 'TRACE', 'HEAD', 'OPTIONS', 'CONNECT', 'DELETE'].includes(method)) request = request.request;
             else request = request[method.toLowerCase()];
 
             let agent = isHttps ? data.httpsAgent || data.agent : data.httpAgent || data.agent
@@ -123,8 +123,12 @@ class Hyttpo {
             })
 
             if(body && method !== 'GET') {
-                req.write(body);
-                req.end();
+                if(Utils.isObject(body) && (body?.constructor?.name === 'FormData' || Utils.isStream(body))) {
+                    body.pipe(req)
+                } else {
+                    req.write(body);
+                    req.end();
+                }
             }
         })
     }

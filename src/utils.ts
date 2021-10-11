@@ -11,6 +11,18 @@ class Util {
         }
     }
 
+    static isObject(data): boolean {
+        return data !== null && typeof data === 'object';
+    }
+
+    static isFunction(data): boolean {
+        return toString.call(data) === '[object Function]';
+    }
+
+    static isStream(data): boolean {
+        return Util.isObject(data) && Util.isFunction(data.data);
+    }
+    
     static responseRefactor(data) {
         let stringedData = data.toString();
 

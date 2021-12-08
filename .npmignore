@@ -1,6 +1,20 @@
-# Examples
-examples/
-
+# ts
 babel.config.js
-build.js
+build.bash
 src/
+
+# Eslint
+.eslintrc.json
+.eslintignore
+
+# NPM
+package-lock.json
+
+# git
+.gitignore
+.github
+
+# Docs
+docs/
+scripts/
+docs.yml

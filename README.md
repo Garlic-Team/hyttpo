@@ -1,15 +1,26 @@
 <div align="center">
-
-   # Hyttpo
-
-<br />
+   <h1>Hyttpo</h1>
 </div>
 
-## 📂 | Installation
+---
+
+## Installation
+
+Install with [npm](https://www.npmjs.com/) / [yarn](https://yarnpkg.com) / [pnpm](https://pnpm.js.org/):
 
 ```sh
 npm install hyttpo
 yarn add hyttpo
+pnpm add hyttpo
 ```
 
 ## Examples [here](https://github.com/Garlic-Team/hyttpo/tree/main/examples)
+```js
+const hyttpo = require('hyttpo');
+
+hyttpo.request({
+   url: 'https://npmjs.org',
+   method: 'GET'
+})
+   .catch(e => e)
+   .then((res) => { console.log(res.data) })

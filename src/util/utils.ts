@@ -4,7 +4,7 @@ class Util {
         try {
             const result = JSON.parse(data);
             const type = toString.call(result);
-            
+
             return type === '[object Object]' || type === '[object Array]';
         } catch (err) {
             return false;
@@ -22,11 +22,11 @@ class Util {
     static isStream(data): boolean {
         return Util.isObject(data) && Util.isFunction(data.data);
     }
-    
-    static responseRefactor(data) {
-        let stringedData = data.toString();
 
-        if(Util.isJSON(stringedData)) data = JSON.parse(data);
+    static responseRefactor(data) {
+        const stringedData = data.toString();
+
+        if (Util.isJSON(stringedData)) data = JSON.parse(data);
         else data = stringedData;
 
         return data;

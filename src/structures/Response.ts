@@ -1,9 +1,9 @@
-class Response {
+export class Response {
     request: object;
     status: number;
     statusText: string;
     headers: object;
-    data: any;
+    data: string;
     constructor(options) {
         this.request = options.request;
 
@@ -34,5 +34,3 @@ class Response {
         return Buffer.from(this.data);
     }
 }
-
-export default Response;

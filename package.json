@@ -4,6 +4,7 @@
   "description": "A simple way to send requests",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "homepage": "https://garlic-team.github.io/hyttpo",
   "bugs": {
     "url": "https://github.com/Garlic-Team/hyttpo/issues"
   },

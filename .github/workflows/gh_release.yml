@@ -1,0 +1,14 @@
+name: GH Release
+
+on: [workflow_dispatch]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "dist/hyttpo-webpack.js"
+        token: ${{ secrets.GITHUB_TOKEN }}

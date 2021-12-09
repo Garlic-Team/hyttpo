@@ -18,3 +18,8 @@ package-lock.json
 docs/
 scripts/
 docs.yml
+
+# Webpack
+dist/hyttpo-webpack.js
+dist/hyttpo-webpack.js.LICENSE.txt
+dist/hyttpo-webpack.map

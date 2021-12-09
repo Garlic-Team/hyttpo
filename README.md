@@ -14,7 +14,7 @@ yarn add hyttpo
 pnpm add hyttpo
 ```
 
-## Examples [here](https://github.com/Garlic-Team/hyttpo/tree/main/examples)
+## Examples [here](https://github.com/Garlic-Team/hyttpo/tree/master/examples)
 ```js
 const hyttpo = require('hyttpo');
 

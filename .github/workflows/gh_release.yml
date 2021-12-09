@@ -11,6 +11,6 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         artifacts: "dist/hyttpo-webpack.js"
-        tag: "$(jq --raw-output '.version' package.json)1"
-        name: "$(jq --raw-output '.version' package.json)1"
+        tag: "1.0test"
+        name: "1"
         token: ${{ secrets.GITHUB_TOKEN }}

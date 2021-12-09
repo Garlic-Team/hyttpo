@@ -23,10 +23,10 @@ class Util {
         return Util.isObject(data) && Util.isFunction(data.data);
     }
 
-    static responseRefactor(data) {
-        const stringedData = data.toString();
+    static responseRefactor(data: Buffer | string, encoding?: BufferEncoding) {
+        const stringedData = data.toString(encoding ?? 'utf-8');
 
-        if (Util.isJSON(stringedData)) data = JSON.parse(data);
+        if (Util.isJSON(stringedData)) data = JSON.parse(data as string);
         else data = stringedData;
 
         return data;

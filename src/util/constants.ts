@@ -8,12 +8,15 @@ export type PayloadMethod =
     | 'HEAD'
     | 'OPTIONS'
     | 'CONNECT'
-    | 'DELETE';
+    | 'DELETE'
+    | 'SEARCH';
 
 export interface PayloadRequest {
     method: PayloadMethod;
     url: string;
     body?: string;
     responseType?: ResponseType;
+    responseEncoding?: BufferEncoding;
+    maxContentLength?: number;
     headers?: object;
 }

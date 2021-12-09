@@ -4,7 +4,8 @@ import * as zlib from 'zlib';
 import Utils from '../util/utils';
 import { Response } from '../structures/Response';
 import { PayloadMethod, PayloadRequest } from '../util/constants';
-const methods = ['GET', 'POST', 'PATCH', 'PUT', 'TRACE', 'HEAD', 'OPTIONS', 'CONNECT', 'DELETE'];
+
+const methods = ['GET', 'POST', 'PATCH', 'PUT', 'TRACE', 'HEAD', 'OPTIONS', 'CONNECT', 'DELETE', 'SEARCH'];
 
 export class Hyttpo {
     constructor() {
@@ -34,9 +35,9 @@ export class Hyttpo {
 
             const headers = data.headers || {};
             if (!headers.Accept) headers.Accept = 'application/json, text/plain, */*';
-            if (!headers['User-Agent']) headers['User-Agent'] = 'hyttpo/nodejs';
+            if (!headers['User-Agent']) headers['User-Agent'] = 'hyttpo/nodejs (+https://github.com/Garlic-Team/hyttpo)';
 
-            if (['POST', 'PATCH', 'PUT', 'TRACE', 'HEAD', 'OPTIONS', 'CONNECT', 'DELETE'].includes(method)) request = request.request;
+            if (methods.includes(method) && method !== 'GET') request = request.request;
             else request = request[method.toLowerCase()];
 
             const agent = isHttps ? data.httpsAgent || data.agent : data.httpAgent || data.agent;
@@ -82,9 +83,17 @@ export class Hyttpo {
                     else reject(final);
                 } else {
                     let buffer: any = [];
+                    let totalSize = 0;
 
                     stream.on('data', chunk => {
                         buffer.push(chunk);
+
+                        totalSize += chunk.length;
+
+                        if (data.maxContentLength > -1 && totalSize > data.maxContentLength) {
+                            stream.destroy();
+                            reject(new Error(`maxContentLength (${data.maxContentLength}) exceeded`));
+                        }
                     });
 
                     stream.on('error', error => {
@@ -96,7 +105,9 @@ export class Hyttpo {
                         buffer = Buffer.concat(buffer);
 
                         if (!['arraybuffer', 'buffer'].includes(data.responseType)) {
-                            buffer = Utils.responseRefactor(buffer);
+                            buffer = Utils.responseRefactor(buffer, data.responseEncoding);
+                        } else if (data.responseType === 'arraybuffer') {
+                            buffer = new Uint32Array(buffer.buffer, buffer.byteOffset, buffer.byteLength / Uint32Array.BYTES_PER_ELEMENT).buffer;
                         }
 
                         response.data = buffer;
@@ -134,4 +145,5 @@ export class Hyttpo {
     options(url: string, data?: PayloadRequest) {}
     connect(url: string, data?: PayloadRequest) {}
     delete(url: string, data?: PayloadRequest) {}
+    search(url: string, data?: PayloadRequest) {}
 }

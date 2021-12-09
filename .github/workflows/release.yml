@@ -22,7 +22,7 @@ jobs:
         run: npm run build
 
       - name: Publish webpack & releases
-      - uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1
         with:
           artifacts: "dist/hyttpo-webpack.js"
           tag: $(jq --raw-output '.version' package.json)

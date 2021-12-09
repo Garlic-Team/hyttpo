@@ -1,9 +1,13 @@
+import { Redirect } from '../util/constants';
+
 export class Response {
     request: object;
     status: number;
     statusText: string;
     headers: object;
     data: string;
+    responseUrl: string;
+    redirects: Array<Redirect>;
     constructor(options) {
         this.request = options.request;
 
@@ -12,6 +16,9 @@ export class Response {
 
         this.headers = options.headers;
         this.data = options.data;
+
+        if ('responseUrl' in options) this.responseUrl = options.responseUrl;
+        if ('redirects' in options) this.redirects = options.redirects;
     }
 
     get ok(): boolean {

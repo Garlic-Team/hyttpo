@@ -1,3 +1,5 @@
+import { PayloadRequest } from './constants';
+
 class Util {
     static isJSON(data): boolean {
         if (typeof data !== 'string') return false;
@@ -30,6 +32,21 @@ class Util {
         else data = stringedData;
 
         return data;
+    }
+
+    static dataConfigParse(data: PayloadRequest): object {
+        return {
+            method: data.method || 'GET',
+            url: data.url,
+            body: data.body || {},
+            headers: data.headers || {},
+            responseType: data.responseType || undefined,
+            responseEncoding: data.responseEncoding || undefined,
+            maxContentLength: data.maxContentLength || undefined,
+            trackRedirects: data.trackRedirects || false,
+            maxRedirects: data.maxRedirects || 0,
+            maxBodyLength: data.maxBodyLength || -1,
+        };
     }
 }
 

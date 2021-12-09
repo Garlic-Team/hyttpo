@@ -34,5 +34,5 @@ module.exports = {
         globalObject: 'this'
     },
     devtool: 'source-map',
-    mode: 'production'
+    mode: 'development'
 }

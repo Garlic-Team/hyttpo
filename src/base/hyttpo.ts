@@ -1,9 +1,10 @@
 import * as https from 'https';
 import * as http from 'http';
+import * as follwoRedirects from 'follow-redirects';
 import * as zlib from 'zlib';
 import Utils from '../util/utils';
 import { Response } from '../structures/Response';
-import { PayloadMethod, PayloadRequest } from '../util/constants';
+import { PayloadMethod, PayloadRequest, RequestOptions } from '../util/constants';
 
 const methods = ['GET', 'POST', 'PATCH', 'PUT', 'TRACE', 'HEAD', 'OPTIONS', 'CONNECT', 'DELETE', 'SEARCH'];
 
@@ -25,10 +26,23 @@ export class Hyttpo {
 
     private rawRequest(data): Promise<Response> {
         return new Promise((resolve, reject) => {
+            data = Utils.dataConfigParse(data);
+
             const url = new URL(data.url);
             const isHttps = !!(url.protocol === 'https:');
 
-            let request: any = isHttps ? https : http;
+            const requestOptions: RequestOptions = {};
+
+            let request: any;
+            if (data.maxRedirects === 0) {
+                request = isHttps ? https : http;
+            } else {
+                requestOptions.maxRedirects = data.maxRedirects;
+                requestOptions.trackRedirects = data.trackRedirects;
+
+                request = isHttps ? follwoRedirects.https : follwoRedirects.http;
+            }
+
             const method: PayloadMethod = data.method.toUpperCase();
 
             const body = data.body;
@@ -42,14 +56,14 @@ export class Hyttpo {
 
             const agent = isHttps ? data.httpsAgent || data.agent : data.httpAgent || data.agent;
 
-            const requestOptions = {
-                path: `${url.pathname}${url.search}`,
-                method: method,
-                headers: headers,
-                hostname: url.hostname,
-                port: url.port,
-                agent: agent,
-            };
+            requestOptions.path = `${url.pathname}${url.search}`;
+            requestOptions.method = method;
+            requestOptions.headers = headers;
+            requestOptions.hostname = url.hostname;
+            requestOptions.port = url.port;
+            requestOptions.agent = agent;
+
+            if (data.maxBodyLength > -1) requestOptions.maxBodyLength = data.maxBodyLength;
 
             const req = request(requestOptions, res => {
                 const lastRequest = req.req || req;
@@ -67,13 +81,18 @@ export class Hyttpo {
                     }
                 }
 
-                const response = {
+                const response: any = {
                     request: res,
                     status: res.statusCode,
                     statusText: res.statusMessage,
                     headers: res.headers,
                     data: null,
                 };
+
+                if (data.trackRedirects) {
+                    response.responseUrl = res.responseUrl;
+                    response.redirects = res.redirects;
+                }
 
                 if (data.responseType === 'stream') {
                     response.data = stream;
@@ -83,14 +102,11 @@ export class Hyttpo {
                     else reject(final);
                 } else {
                     let buffer: any = [];
-                    let totalSize = 0;
 
                     stream.on('data', chunk => {
                         buffer.push(chunk);
 
-                        totalSize += chunk.length;
-
-                        if (data.maxContentLength > -1 && totalSize > data.maxContentLength) {
+                        if (data.maxContentLength > -1 && Buffer.concat(buffer).length > data.maxContentLength) {
                             stream.destroy();
                             reject(new Error(`maxContentLength (${data.maxContentLength}) exceeded`));
                         }

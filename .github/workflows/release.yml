@@ -21,12 +21,18 @@ jobs:
       - name: build
         run: npm run build
 
+      - name: Get version & asign
+        id: get_version
+        run: |
+          variable=$(jq --raw-output '.version' package.json)
+          echo ::set-output name=version::$variable
+
       - name: Publish webpack & releases
         uses: ncipollo/release-action@v1
         with:
           artifacts: "dist/hyttpo-webpack.js"
-          tag: $(jq --raw-output '.version' package.json)
-          name: $(jq --raw-output '.version' package.json)
+          tag: ${{ steps.get_version.outputs.version }}
+          name: ${{ steps.get_version.outputs.version }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish NPM

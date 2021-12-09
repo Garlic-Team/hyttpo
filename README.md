@@ -24,3 +24,4 @@ hyttpo.request({
 })
    .catch(e => e)
    .then((res) => { console.log(res.data) })
+```

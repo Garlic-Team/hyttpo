@@ -17,12 +17,12 @@ export class Hyttpo {
         });
     }
 
-    request(data: PayloadRequest): Promise<Response> {
+    public request(data: PayloadRequest): Promise<Response> {
         if (typeof data !== 'object') throw Error('It must be an object!');
         return this.rawRequest(data);
     }
 
-    rawRequest(data): Promise<Response> {
+    private rawRequest(data): Promise<Response> {
         return new Promise((resolve, reject) => {
             const url = new URL(data.url);
             const isHttps = !!(url.protocol === 'https:');
@@ -123,4 +123,15 @@ export class Hyttpo {
             }
         });
     }
+
+    /* eslint-disable  @typescript-eslint/no-unused-vars, no-unused-vars, @typescript-eslint/no-empty-function, no-empty-function */
+    get(url: string, data?: PayloadRequest) {}
+    post(url: string, data?: PayloadRequest) {}
+    patch(url: string, data?: PayloadRequest) {}
+    put(url: string, data?: PayloadRequest) {}
+    trace(url: string, data?: PayloadRequest) {}
+    head(url: string, data?: PayloadRequest) {}
+    options(url: string, data?: PayloadRequest) {}
+    connect(url: string, data?: PayloadRequest) {}
+    delete(url: string, data?: PayloadRequest) {}
 }

@@ -33,5 +33,8 @@
     "babel-plugin-add-module-exports": "^1.0.4",
     "glob": "^7.2.0",
     "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "eslint": "^8.4.1"
   }
 }

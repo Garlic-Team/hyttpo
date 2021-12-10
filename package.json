@@ -1,6 +1,6 @@
 {
   "name": "hyttpo",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Easy way to send requests for node.js and browser",
   "main": "./dist/js/index.js",
   "types": "./dist/js/index.d.ts",

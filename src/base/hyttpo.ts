@@ -85,6 +85,7 @@ export class Hyttpo {
                     case 'deflate':
                         stream = stream.pipe(zlib.createUnzip());
 
+                        data.responseType = 'stream';
                         delete res.headers['content-encoding'];
                         break;
                 }
@@ -92,8 +93,8 @@ export class Hyttpo {
 
             const response = new Response({
                 request: res,
-                status: res.statusCode,
-                statusText: res.statusMessage,
+                statusCode: res.statusCode,
+                statusuMessage: res.statusMessage,
                 headers: res.headers
             });
 
@@ -103,11 +104,13 @@ export class Hyttpo {
             }
 
             if (data.responseType === 'stream') {
+                stream.on('data', chunk => promise.emit('data', chunk));
+                stream.on('end', () => promise.emit('end', stream));
+
                 response.data = stream;
 
-                const final = new Response(response);
-                if (final.ok) resolves(final);
-                else rejects(final);
+                if (response.ok) resolves(response);
+                else rejects(response);
             } else {
                 let buffer: any = [];
 
@@ -148,8 +151,12 @@ export class Hyttpo {
 
         req.on('error', error => {
             if (req.aborted && error.code !== 'ERR_FR_TOO_MANY_REDIRECTS') return;
+
+            promise.emit('error', error);
             rejects(error);
         });
+
+        req.on('response', (message) => promise.emit('response', new Response(message)));
 
         if (body && method !== 'GET') {
             if (Utils.isObject(body) && (body?.constructor?.name === 'FormData' || Utils.isStream(body))) {

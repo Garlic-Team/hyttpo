@@ -11,8 +11,8 @@ export class Response {
     constructor(options?) {
         if ('request' in options) this.request = options.request;
 
-        if ('status' in options) this.status = options.status;
-        if ('statusText' in options) this.statusText = options.statusText;
+        if ('statusCode' in options) this.status = options.statusCode;
+        if ('statusMessage' in options) this.statusText = options.statusMessage;
 
         if ('headers' in options) this.headers = options.headers;
         if ('data' in options) this.data = options.data;
@@ -23,6 +23,14 @@ export class Response {
 
     get ok(): boolean {
         return this.status >= 200 && this.status <= 300;
+    }
+
+    get statusCode(): number {
+        return this.status;
+    }
+
+    get statusMessage(): string {
+        return this.statusText;
     }
 
     json(): object {

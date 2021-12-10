@@ -11,13 +11,13 @@ const methods = ['GET', 'POST', 'PATCH', 'PUT', 'TRACE', 'HEAD', 'OPTIONS', 'CON
 
 export class Hyttpo {
     constructor() {
-        methods.forEach(method => {
+        /*methods.forEach(method => {
             this[method.toLocaleLowerCase()] = data => {
                 if (typeof data === 'string') data = { url: data };
 
                 return this.rawRequest({ method: method, ...data });
             };
-        });
+        });*/
     }
 
     public request(data: PayloadRequest): HPromise<Response> {

@@ -24,9 +24,9 @@ module.exports = {
             Buffer: ['buffer', 'Buffer'],
         })
     ],
-    entry: './dist/index.js',
+    entry: './dist/cjs/index.cjs',
     output: {
-        path: __dirname + '/dist/',
+        path: __dirname + '/dist/webpack/',
         filename:  'hyttpo-webpack.js',
         sourceMapFilename: 'hyttpo-webpack.map',
         library: 'hyttpo',

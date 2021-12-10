@@ -1,21 +1,21 @@
 import { Redirect } from '../util/constants';
 
 export class Response {
-    request: object;
-    status: number;
-    statusText: string;
-    headers: object;
-    data: string;
-    responseUrl: string;
-    redirects: Array<Redirect>;
-    constructor(options) {
-        this.request = options.request;
+    public request?: object;
+    public status?: number;
+    public statusText?: string;
+    public headers?: object;
+    public data?: string;
+    public responseUrl?: string;
+    public redirects?: Array<Redirect>;
+    constructor(options?) {
+        if ('request' in options) this.request = options.request;
 
-        this.status = options.status;
-        this.statusText = options.statusText;
+        if ('status' in options) this.status = options.status;
+        if ('statusText' in options) this.statusText = options.statusText;
 
-        this.headers = options.headers;
-        this.data = options.data;
+        if ('headers' in options) this.headers = options.headers;
+        if ('data' in options) this.data = options.data;
 
         if ('responseUrl' in options) this.responseUrl = options.responseUrl;
         if ('redirects' in options) this.redirects = options.redirects;

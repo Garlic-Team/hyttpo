@@ -16,7 +16,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
 
       - name: Install
-        run: npm install --save-dev @babel/cli @babel/core @babel/plugin-proposal-class-properties @babel/plugin-proposal-optional-chaining @babel/plugin-syntax-dynamic-import @babel/plugin-transform-runtime @babel/preset-env @babel/preset-typescript @discordjs/ts-docgen @rollup/plugin-commonjs @rollup/plugin-node-resolve @types/eslint @types/estree @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser assert babel-cli browserify-zlib buffer eslint https-browserify process rollup rollup-plugin-peer-deps-external rollup-plugin-terser rollup-plugin-typescript2 stream-browserify stream-http typescript url util webpack webpack-cli
+        run: npm install --save-dev @babel/cli @babel/core @babel/preset-env @babel/preset-typescript @discordjs/ts-docgen @types/eslint @types/estree @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser assert babel-cli babel-plugin-add-module-exports browserify-zlib buffer eslint https-browserify process rollup stream-browserify stream-http typescript url util webpack webpack-cli
 
       - name: build
         run: npm run build
@@ -32,6 +32,4 @@ jobs:
           name: ${{ steps.get_version.outputs.version }}
           path: |
             dist/webpack
-            dist/cjs
-            dist/esm
-            dist/types
+            dist/js

@@ -7,4 +7,4 @@ const packageJson = JSON.parse(fs.readFileSync(`${__dirname}/../package.json`, '
 
 const dependencies = Object.keys(packageJson.devDependencies);
 
-console.log(dependencies.map(d => d).join(' '))
+console.log(dependencies.filter(d => !d.includes('eslint')).map(d => d).join(' '))

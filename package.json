@@ -19,7 +19,7 @@
     "build:babel": "npx babel --extensions .ts ./src -d ./dist/js --minified",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/js/",
     "build:webpack": "npx webpack",
-    "docs:build": "typedoc --json docs/out-main.json src/index.ts && node scripts/docs.mjs"
+    "docs:build": "typedoc --json docs/out-master.json src/index.ts && node scripts/docs.mjs"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.7",

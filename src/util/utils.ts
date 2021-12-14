@@ -1,5 +1,7 @@
 import { PayloadRequest } from './constants';
 
+const ignoreHeaders = ['age', 'authorization', 'content-length', 'content-type', 'etag', 'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since', 'last-modified', 'location', 'max-forwards', 'proxy-authorization', 'referer', 'retry-after', 'user-agent'];
+
 class Util {
     static isJSON(data): boolean {
         if (typeof data !== 'string') return false;
@@ -24,6 +26,38 @@ class Util {
     static isStream(data): boolean {
         return Util.isObject(data) && Util.isFunction(data.data);
     }
+
+    static isFormData(data): boolean {
+        return (typeof FormData !== 'undefined') && (data instanceof FormData);
+    }
+
+    static stringTrim(data): string {
+        return data.trim ? data.trim() : data.replace(/^\s+|\s+$/g, '');
+    }
+
+    static parseHeaders(headers): object {
+        let parsed = {};
+        let key;
+        let val;
+        let i;
+      
+        if (!headers) { return parsed; }
+      
+        headers.split('\n').forEach((line) => {
+          i = line.indexOf(':');
+          key = Util.stringTrim(line.substr(0, i).trim()).toLowerCase();
+          val = Util.stringTrim(line.substr(i + 1));
+      
+          if (key) {
+            if (parsed[key] && ignoreHeaders.indexOf(key) >= 0) return;
+
+            if (key === 'set-cookie') parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]); 
+            else parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+          }
+        });
+      
+        return parsed;
+      };
 
     static responseRefactor(data: Buffer | string, encoding?: BufferEncoding) {
         const stringedData = data.toString(encoding ?? 'utf-8');

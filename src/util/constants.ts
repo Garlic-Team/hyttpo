@@ -17,7 +17,7 @@ export type PayloadMethod =
 export interface PayloadRequest {
     method: PayloadMethod;
     url: string;
-    body?: string;
+    body?: any;
     headers?: object;
     responseType?: ResponseType;
     responseEncoding?: BufferEncoding;
@@ -25,6 +25,9 @@ export interface PayloadRequest {
     trackRedirects?: boolean;
     maxRedirects?: number;
     maxBodyLength?: number;
+    onData?: Function;
+    onDownloadProgress?: Function;
+    onUploadProgress?: Function;
 }
 
 export interface RequestOptions {

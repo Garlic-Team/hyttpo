@@ -10,8 +10,11 @@ const methods = ['GET', 'POST', 'PATCH', 'PUT', 'TRACE', 'HEAD', 'OPTIONS', 'CON
 export class Hyttpo {
     constructor() {
         methods.forEach(method => {
-            this[method.toLocaleLowerCase()] = data => {
+            this[method.toLocaleLowerCase()] = (url, data) => {
+                if (typeof url === 'object') data = url;
+                
                 if (typeof data === 'string') data = { url: data };
+                else data.url = url;
 
                 return this.rawRequest({ method: method, ...data });
             };

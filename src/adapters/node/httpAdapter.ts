@@ -83,7 +83,7 @@ export const httpAdapter = (data, methods): HPromise<Response> => {
         }
 
         if (data.responseType === 'stream') {
-            stream.on('data', chunk => promise.emit('data', chunk));
+            stream.on('data', chunk => promise.emit('data', chunk) && data.onData?.(chunk));
             stream.on('end', () => promise.emit('end', stream));
 
             response.data = stream;
@@ -95,6 +95,7 @@ export const httpAdapter = (data, methods): HPromise<Response> => {
 
             stream.on('data', chunk => {
                 promise.emit('data', chunk);
+                data.onData?.(chunk);
                 buffer.push(chunk);
 
                 if (data.maxContentLength > -1 && Buffer.concat(buffer).length > data.maxContentLength) {

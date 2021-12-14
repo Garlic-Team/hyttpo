@@ -59,8 +59,8 @@ export const xmlAdapter = (data): HPromise<Response> => {
         }
     }
 
-    request.onprogress = (event) => promise.emit('onDownloadProgress', event);
-    request.upload.onprogress = (event) => promise.emit('onUploadProgress', event);
+    request.onprogress = (event) => promise.emit('onDownloadProgress', event) && data.onDownloadProgress?.(event);
+    request.upload.onprogress = (event) => promise.emit('onUploadProgress', event) && data.onUploadProgress?.(event);
 
     request.onabort = () => request && promise.emit('error', 'Request aborted') && rejects('Request aborted');
     request.onerror = () => request && promise.emit('error', 'Network Error') && rejects('Network Error');

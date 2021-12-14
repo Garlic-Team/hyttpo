@@ -1,6 +1,6 @@
 # ts
 babel.config.js
-rollup.config.js
+tsconfig.json
 build.bash
 src/
 
@@ -19,3 +19,6 @@ package-lock.json
 docs/
 scripts/
 docs.yml
+
+# Webpack
+webpack.config.js

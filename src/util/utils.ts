@@ -80,6 +80,9 @@ class Util {
             trackRedirects: data.trackRedirects || false,
             maxRedirects: data.maxRedirects || 0,
             maxBodyLength: data.maxBodyLength || -1,
+            onData: data.onData,
+            onDownloadProgress: data.onDownloadProgress,
+            onUploadProgress: data.onUploadProgress,
         };
     }
 }

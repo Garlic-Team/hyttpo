@@ -30,7 +30,7 @@ jobs:
       - name: Publish webpack & releases
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "dist/webpack/hyttpo-webpack.js"
+          artifacts: "dist/webpack/index.js"
           tag: ${{ steps.get_version.outputs.version }}
           name: ${{ steps.get_version.outputs.version }}
           token: ${{ secrets.GITHUB_TOKEN }}

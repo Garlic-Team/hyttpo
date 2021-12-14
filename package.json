@@ -4,7 +4,7 @@
   "description": "Easy way to send requests for node.js and browser",
   "main": "./dist/js/index.js",
   "types": "./dist/js/index.d.ts",
-  "homepage": "https://garlic-team.github.io/hyttpo",
+  "homepage": "https://garlic-team.js.org/guide/hyttpo",
   "bugs": {
     "url": "https://github.com/Garlic-Team/hyttpo/issues"
   },

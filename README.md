@@ -14,14 +14,4 @@ yarn add hyttpo
 pnpm add hyttpo
 ```
 
-## Wiki [here](https://github.com/Garlic-Team/hyttpo/wiki)
-```js
-const hyttpo = require('hyttpo');
-
-hyttpo.request({
-   url: 'https://npmjs.org',
-   method: 'GET'
-})
-   .catch(e => e)
-   .then((res) => { console.log(res.data) })
-```
+## Guide [here](https://garlic-team.js.org/guide/hyttpo)

@@ -9,7 +9,10 @@ export type PayloadMethod =
     | 'OPTIONS'
     | 'CONNECT'
     | 'DELETE'
-    | 'SEARCH';
+    | 'SEARCH'
+    | 'PURGE'
+    | 'LINK'
+    | 'UNLINK';
 
 export interface PayloadRequest {
     method: PayloadMethod;

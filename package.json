@@ -3,6 +3,7 @@
   "version": "0.2.9",
   "description": "Easy way to send requests for node.js and browser",
   "main": "./dist/js/index.js",
+  "browser": "./dist/webpack/index.js",
   "types": "./dist/js/index.d.ts",
   "homepage": "https://garlic-team.js.org/guide/hyttpo",
   "bugs": {

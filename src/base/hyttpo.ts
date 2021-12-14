@@ -5,7 +5,7 @@ import { HPromise } from '../structures/HPromise';
 import { httpAdapter } from '../adapters/node/httpAdapter';
 import { xmlAdapter } from '../adapters/browser/xmlAdapter';
 
-const methods = ['GET', 'POST', 'PATCH', 'PUT', 'TRACE', 'HEAD', 'OPTIONS', 'CONNECT', 'DELETE', 'SEARCH'];
+const methods = ['GET', 'POST', 'PATCH', 'PUT', 'TRACE', 'HEAD', 'OPTIONS', 'CONNECT', 'DELETE', 'SEARCH', 'PURGE', 'LINK', 'UNLINK'];
 
 export class Hyttpo {
     constructor() {
@@ -35,14 +35,30 @@ export class Hyttpo {
     }
 
     /* eslint-disable  @typescript-eslint/no-unused-vars, no-unused-vars, @typescript-eslint/no-empty-function, no-empty-function */
-    get(url: string, data?: PayloadRequest) {}
-    post(url: string, data?: PayloadRequest) {}
-    patch(url: string, data?: PayloadRequest) {}
-    put(url: string, data?: PayloadRequest) {}
-    trace(url: string, data?: PayloadRequest) {}
-    head(url: string, data?: PayloadRequest) {}
-    options(url: string, data?: PayloadRequest) {}
-    connect(url: string, data?: PayloadRequest) {}
-    delete(url: string, data?: PayloadRequest) {}
-    search(url: string, data?: PayloadRequest) {}
+    // @ts-ignore
+    get(url: string, data?: PayloadRequest): HPromise<Response> {}
+    // @ts-ignore
+    post(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    // @ts-ignore
+    patch(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    // @ts-ignore
+    put(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    // @ts-ignore
+    trace(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    // @ts-ignore
+    head(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    // @ts-ignore
+    options(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    // @ts-ignore
+    connect(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    // @ts-ignore
+    delete(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    // @ts-ignore
+    search(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    // @ts-ignore
+    purge(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    // @ts-ignore
+    link(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    // @ts-ignore
+    unlink(url: string, data?: PayloadRequest): HPromise<Response>  {}
 }

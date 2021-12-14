@@ -26,12 +26,10 @@ module.exports = {
     entry: './dist/js/index.js',
     output: {
         path: __dirname + '/dist/webpack/',
-        filename:  'hyttpo-webpack.js',
-        sourceMapFilename: 'hyttpo-webpack.map',
+        filename:  'index.js',
         library: 'hyttpo',
         libraryTarget: 'umd',
         globalObject: 'this'
     },
-    devtool: 'source-map',
     mode: 'production'
 }

@@ -44,6 +44,8 @@ export const xmlAdapter = (data): HPromise<Response> => {
             data: responseData
         });
 
+        promise.emit('end', { response });
+        
         if (response.ok) resolves(response);
         else rejects(response);
     }
@@ -57,9 +59,12 @@ export const xmlAdapter = (data): HPromise<Response> => {
         }
     }
 
-    request.onabort = () => request && rejects('Request aborted');
-    request.onerror = () => request && rejects('Network Error');
-    request.ontimeout = () => request && rejects('Request timeouted');
+    request.onprogress = (event) => promise.emit('onDownloadProgress', event);
+    request.upload.onprogress = (event) => promise.emit('onUploadProgress', event);
+
+    request.onabort = () => request && promise.emit('error', 'Request aborted') && rejects('Request aborted');
+    request.onerror = () => request && promise.emit('error', 'Network Error') && rejects('Network Error');
+    request.ontimeout = () => request && promise.emit('error', 'Request timeout') && rejects('Request timeouted');
 
     if (data.responseType && data.responseType.toLowerCase() !== 'json') request.responseType = data.responseType.toLowerCase();
 

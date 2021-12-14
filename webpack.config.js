@@ -2,6 +2,9 @@ const webpack = require('webpack');
 
 module.exports = {
     resolve: {
+        fallback: {
+            buffer: require.resolve("buffer")
+        },
         alias: {
             process: "process/browser"
         }

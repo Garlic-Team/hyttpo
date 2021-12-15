@@ -1,7 +1,6 @@
 # ts
 babel.config.js
 tsconfig.json
-build.bash
 src/
 
 # Eslint

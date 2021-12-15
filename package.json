@@ -4,6 +4,7 @@
   "description": "Easy way to send requests for node.js and browser",
   "main": "./dist/js/index.js",
   "browser": "./dist/webpack/index.js",
+  "unpkg": "./dist/webpack/index.js",
   "types": "./dist/js/index.d.ts",
   "homepage": "https://garlic-team.js.org/guide/hyttpo",
   "bugs": {
@@ -16,7 +17,7 @@
   "author": "Garlic Team",
   "license": "ISC",
   "scripts": {
-    "build": "bash build.bash",
+    "build": "bash scripts/build.bash",
     "build:babel": "npx babel --extensions .ts ./src -d ./dist/js --minified",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/js/",
     "build:webpack": "npx webpack",

@@ -1,13 +1,23 @@
 import * as events from 'events';
+import { EventEmitter } from 'events';
+import { HPromiseEvents } from '../util/constants';
 
 export class HPromise<T> extends Promise<T> {
-    on;
-    emit;
+    private _on;
+    private _emit;
     constructor(executor) {
         super(executor);
 
         const emitter = new events.EventEmitter();
-        this.on = emitter.on;
-        this.emit = emitter.emit;
+        this._on = emitter.on;
+        this._emit = emitter.emit;
+    }
+
+    on<K extends keyof HPromiseEvents>(event: K, listener: (args: HPromiseEvents[K]) => void) {
+        return this._on(event, listener);
+    }
+
+    emit(name, ...args) {
+        return this._emit(name, ...args)
     }
 }

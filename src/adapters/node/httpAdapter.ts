@@ -2,12 +2,13 @@ import * as https from 'https';
 import * as http from 'http';
 import * as follwoRedirects from 'follow-redirects';
 import * as zlib from 'zlib';
+import { Blob } from 'buffer';
 import Utils from '../../util/utils';
 import { Response } from '../../structures/Response';
-import { PayloadMethod, RequestOptions } from '../../util/constants';
+import { PayloadMethod, PayloadRequest, RequestOptions } from '../../util/constants';
 import { HPromise } from '../../structures/HPromise';
 
-export const httpAdapter = (data, methods): HPromise<Response> => {
+export const httpAdapter = (data: PayloadRequest, methods: Array<string>): HPromise<Response> => {
     let resolves;
     let rejects;
 
@@ -31,11 +32,11 @@ export const httpAdapter = (data, methods): HPromise<Response> => {
         request = isHttps ? follwoRedirects.https : follwoRedirects.http;
     }
 
-    const method: PayloadMethod = data.method.toUpperCase();
+    const method: PayloadMethod = data.method.toUpperCase() as PayloadMethod;
 
     const body = data.body;
 
-    const headers = data.headers || {};
+    const headers: any = data.headers || {};
     if (!headers.Accept) headers.Accept = 'application/json, text/plain, */*';
     if (!headers['User-Agent']) headers['User-Agent'] = 'hyttpo/nodejs (+https://github.com/Garlic-Team/hyttpo)';
 
@@ -84,7 +85,7 @@ export const httpAdapter = (data, methods): HPromise<Response> => {
 
         if (data.responseType === 'stream') {
             stream.on('data', chunk => promise.emit('data', chunk) && data.onData?.(chunk));
-            stream.on('end', () => promise.emit('end', stream));
+            stream.on('end', () => promise.emit('end', stream) && data.onEnd?.(stream));
 
             response.data = stream;
 
@@ -100,6 +101,9 @@ export const httpAdapter = (data, methods): HPromise<Response> => {
 
                 if (data.maxContentLength > -1 && Buffer.concat(buffer).length > data.maxContentLength) {
                     stream.destroy();
+
+                    data.onError?.(`maxContentLength (${data.maxContentLength}) exceeded`);
+                    promise.emit('error', `maxContentLength (${data.maxContentLength}) exceeded`);
                     rejects(new Error(`maxContentLength (${data.maxContentLength}) exceeded`));
                 }
             });
@@ -107,6 +111,7 @@ export const httpAdapter = (data, methods): HPromise<Response> => {
             stream.on('error', error => {
                 if (req.aborted) return;
 
+                data.onError?.(error);
                 promise.emit('error', error);
                 rejects(error);
             });
@@ -116,12 +121,15 @@ export const httpAdapter = (data, methods): HPromise<Response> => {
 
                 if (!['arraybuffer', 'buffer'].includes(data.responseType)) {
                     buffer = Utils.responseRefactor(buffer, data.responseEncoding);
+
+                    if (data.responseType === 'blob') buffer = new Blob([Utils.toString(buffer)]);
                 } else if (data.responseType === 'arraybuffer') {
-                    buffer = new Uint32Array(buffer.buffer, buffer.byteOffset, buffer.byteLength / Uint32Array.BYTES_PER_ELEMENT).buffer;
+                    buffer = Utils.toArrayBuffer(buffer);
                 }
 
                 response.data = buffer;
 
+                data.onEnd?.({ buffer, response });
                 promise.emit('end', { buffer, response });
                 if (response.ok) resolves(response);
                 else rejects(response);
@@ -132,11 +140,12 @@ export const httpAdapter = (data, methods): HPromise<Response> => {
     req.on('error', error => {
         if (req.aborted && error.code !== 'ERR_FR_TOO_MANY_REDIRECTS') return;
 
+        data.onError?.(error);
         promise.emit('error', error);
         rejects(error);
     });
 
-    req.on('response', (message) => promise.emit('response', new Response(message)));
+    req.on('response', (message) => promise.emit('response', new Response(message)) && data.onResponse?.(new Response(message)));
 
     if (body && method !== 'GET') {
         if (Utils.isObject(body) && (body?.constructor?.name === 'FormData' || Utils.isStream(body))) {

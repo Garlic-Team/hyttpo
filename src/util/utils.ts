@@ -35,6 +35,21 @@ class Util {
         return data.trim ? data.trim() : data.replace(/^\s+|\s+$/g, '');
     }
 
+    static toString(data): string {
+        return Util.isObject(data) ? JSON.stringify(data) : data.toString();
+    }
+
+    static toArrayBuffer(buf) {
+        const ab = new ArrayBuffer(buf.length);
+        const view = new Uint8Array(ab);
+
+        for (let i = 0; i < buf.length; ++i) {
+            view[i] = buf[i];
+        }
+
+        return ab;
+    }
+
     static parseHeaders(headers): object {
         let parsed = {};
         let key;
@@ -68,7 +83,7 @@ class Util {
         return data;
     }
 
-    static dataConfigParse(data: PayloadRequest): object {
+    static dataConfigParse(data: PayloadRequest): PayloadRequest {
         return {
             method: data.method || 'GET',
             url: data.url,
@@ -80,7 +95,13 @@ class Util {
             trackRedirects: data.trackRedirects || false,
             maxRedirects: data.maxRedirects || 0,
             maxBodyLength: data.maxBodyLength || -1,
+            agent: data.agent,
+            httpsAgent: data.httpsAgent,
+            httpAgent: data.httpAgent,
+            onEnd: data.onEnd,
             onData: data.onData,
+            onError: data.onError,
+            onResponse: data.onResponse,
             onDownloadProgress: data.onDownloadProgress,
             onUploadProgress: data.onUploadProgress,
         };

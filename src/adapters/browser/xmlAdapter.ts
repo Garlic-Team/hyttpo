@@ -1,9 +1,9 @@
 import { Response } from '../../structures/Response';
 import { HPromise } from '../../structures/HPromise';
-import { PayloadMethod } from '../../util/constants';
+import { PayloadMethod, PayloadRequest, ResponseType } from '../../util/constants';
 import Utils from '../../util/utils';
 
-export const xmlAdapter = (data): HPromise<Response> => {
+export const xmlAdapter = (data: PayloadRequest): HPromise<Response> => {
     let resolves;
     let rejects;
 
@@ -12,7 +12,7 @@ export const xmlAdapter = (data): HPromise<Response> => {
         rejects = reject;
     });
 
-    const headers = data.headers || {};
+    const headers: any = data.headers || {};
     const body = data.body || null;
 
     if (Utils.isFormData(body)) delete headers['Content-Type'];
@@ -20,7 +20,7 @@ export const xmlAdapter = (data): HPromise<Response> => {
     const url = new URL(data.url);
 
     const request: XMLHttpRequest = new XMLHttpRequest();
-    const method: PayloadMethod = data.method.toUpperCase();
+    const method: PayloadMethod = data.method.toUpperCase() as PayloadMethod;
 
     request.open(method, url);
 
@@ -44,6 +44,7 @@ export const xmlAdapter = (data): HPromise<Response> => {
             data: responseData
         });
 
+        data.onEnd?.({ response });
         promise.emit('end', { response });
         
         if (response.ok) resolves(response);
@@ -59,13 +60,15 @@ export const xmlAdapter = (data): HPromise<Response> => {
         }
     }
 
-    request.onprogress = (event) => promise.emit('onDownloadProgress', event) && data.onDownloadProgress?.(event);
-    request.upload.onprogress = (event) => promise.emit('onUploadProgress', event) && data.onUploadProgress?.(event);
+    request.onloadstart = (event) => promise.emit('response', event) && data.onResponse?.(event);
+    request.onprogress = (event) => promise.emit('downloadProgress', event) && data.onDownloadProgress?.(event);
+    request.upload.onprogress = (event) => promise.emit('uploadProgress', event) && data.onUploadProgress?.(event);
 
-    request.onabort = () => request && promise.emit('error', 'Request aborted') && rejects('Request aborted');
-    request.onerror = () => request && promise.emit('error', 'Network Error') && rejects('Network Error');
-    request.ontimeout = () => request && promise.emit('error', 'Request timeout') && rejects('Request timeouted');
+    request.onabort = () => request && promise.emit('error', 'Request aborted') && rejects('Request aborted') && data.onError?.('Request aborted');
+    request.onerror = () => request && promise.emit('error', 'Network Error') && rejects('Network Error') && data.onError?.('Network Error');
+    request.ontimeout = () => request && promise.emit('error', 'Request timeout') && rejects('Request timeouted') && data.onError?.('Request timeouted');
 
+    // @ts-ignore
     if (data.responseType && data.responseType.toLowerCase() !== 'json') request.responseType = data.responseType.toLowerCase();
 
     request.send(body);

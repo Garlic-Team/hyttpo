@@ -1,4 +1,6 @@
-export type ResponseType = 'stream' | 'arraybuffer' | 'buffer' | 'text';
+import { Response } from '../structures/Response';
+
+export type ResponseType = 'stream' | 'arraybuffer' | 'buffer' | 'text' | 'json' | 'blob';
 export type PayloadMethod =
     | 'GET'
     | 'POST'
@@ -25,9 +27,15 @@ export interface PayloadRequest {
     trackRedirects?: boolean;
     maxRedirects?: number;
     maxBodyLength?: number;
-    onData?: Function;
-    onDownloadProgress?: Function;
-    onUploadProgress?: Function;
+    agent?: any;
+    httpsAgent?: any;
+    httpAgent?: any;
+    onEnd?: (any) => void;
+    onData?: (Buffer) => void;
+    onError?: (string) => void;
+    onResponse?: (Response) => void;
+    onDownloadProgress?: (any) => void;
+    onUploadProgress?: (any) => void;
 }
 
 export interface RequestOptions {
@@ -42,6 +50,12 @@ export interface RequestOptions {
     maxBodyLength?: number;
 }
 
+export interface Redirect {
+    url: string;
+    statusCode: number;
+    headers?: object;
+}
+
 export interface ResponseOptions {
     request?: object;
     statusCode?: number;
@@ -52,8 +66,12 @@ export interface ResponseOptions {
     redirects?: Array<Redirect>;
 }
 
-export interface Redirect {
-    url: string;
-    statusCode: number;
-    headers?: object;
+
+export interface HPromiseEvents {
+    end: any;
+    data: Buffer;
+    error: string;
+    response: Response;
+    downloadProgress: any;
+    uploadProgress: any;
 }

@@ -51,28 +51,28 @@ class Util {
     }
 
     static parseHeaders(headers): object {
-        let parsed = {};
+        const parsed = {};
         let key;
         let val;
         let i;
-      
+
         if (!headers) { return parsed; }
-      
-        headers.split('\n').forEach((line) => {
+
+        headers.split('\n').forEach(line => {
           i = line.indexOf(':');
           key = Util.stringTrim(line.substr(0, i).trim()).toLowerCase();
           val = Util.stringTrim(line.substr(i + 1));
-      
+
           if (key) {
             if (parsed[key] && ignoreHeaders.indexOf(key) >= 0) return;
 
-            if (key === 'set-cookie') parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]); 
-            else parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+            if (key === 'set-cookie') parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+            else parsed[key] = parsed[key] ? `${parsed[key]}, ${val}` : val;
           }
         });
-      
+
         return parsed;
-      };
+      }
 
     static responseRefactor(data: Buffer | string, encoding?: BufferEncoding) {
         const stringedData = data.toString(encoding ?? 'utf-8');

@@ -1,6 +1,6 @@
 import Utils from '../util/utils';
 import { Response } from '../structures/Response';
-import { PayloadRequest } from '../util/constants';
+import { PayloadRequest, PayloadRequestAliases } from '../util/constants';
 import { HPromise } from '../structures/HPromise';
 import { httpAdapter } from '../adapters/node/httpAdapter';
 import { xmlAdapter } from '../adapters/browser/xmlAdapter';
@@ -10,11 +10,9 @@ const methods = ['GET', 'POST', 'PATCH', 'PUT', 'TRACE', 'HEAD', 'OPTIONS', 'CON
 export class Hyttpo {
     constructor() {
         methods.forEach(method => {
-            this[method.toLocaleLowerCase()] = (url, data) => {
+            this[method.toLocaleLowerCase()] = (url, data: PayloadRequestAliases) => {
                 if (typeof url === 'object') data = url;
-                
-                if (typeof data === 'string') data = { url: data };
-                else data.url = url;
+                if (!data.url) data.url = url;
 
                 return this.rawRequest({ method: method, ...data });
             };
@@ -37,31 +35,31 @@ export class Hyttpo {
         }
     }
 
-    /* eslint-disable  @typescript-eslint/no-unused-vars, no-unused-vars, @typescript-eslint/no-empty-function, no-empty-function */
+    /* eslint-disable  @typescript-eslint/ban-ts-comment, @typescript-eslint/no-unused-vars, no-unused-vars, @typescript-eslint/no-empty-function, no-empty-function */
     // @ts-ignore
     get(url: string, data?: PayloadRequest): HPromise<Response> {}
     // @ts-ignore
-    post(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    post(url: string, data?: PayloadRequest): HPromise<Response> {}
     // @ts-ignore
-    patch(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    patch(url: string, data?: PayloadRequest): HPromise<Response> {}
     // @ts-ignore
-    put(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    put(url: string, data?: PayloadRequest): HPromise<Response> {}
     // @ts-ignore
-    trace(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    trace(url: string, data?: PayloadRequest): HPromise<Response> {}
     // @ts-ignore
-    head(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    head(url: string, data?: PayloadRequest): HPromise<Response> {}
     // @ts-ignore
-    options(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    options(url: string, data?: PayloadRequest): HPromise<Response> {}
     // @ts-ignore
-    connect(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    connect(url: string, data?: PayloadRequest): HPromise<Response> {}
     // @ts-ignore
-    delete(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    delete(url: string, data?: PayloadRequest): HPromise<Response> {}
     // @ts-ignore
-    search(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    search(url: string, data?: PayloadRequest): HPromise<Response> {}
     // @ts-ignore
-    purge(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    purge(url: string, data?: PayloadRequest): HPromise<Response> {}
     // @ts-ignore
-    link(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    link(url: string, data?: PayloadRequest): HPromise<Response> {}
     // @ts-ignore
-    unlink(url: string, data?: PayloadRequest): HPromise<Response>  {}
+    unlink(url: string, data?: PayloadRequest): HPromise<Response> {}
 }

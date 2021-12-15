@@ -16,6 +16,27 @@ export type PayloadMethod =
     | 'LINK'
     | 'UNLINK';
 
+export interface PayloadRequestAliases {
+    url?: string;
+    body?: any;
+    headers?: object;
+    responseType?: ResponseType;
+    responseEncoding?: BufferEncoding;
+    maxContentLength?: number;
+    trackRedirects?: boolean;
+    maxRedirects?: number;
+    maxBodyLength?: number;
+    agent?: any;
+    httpsAgent?: any;
+    httpAgent?: any;
+    onEnd?: (any) => void;
+    onData?: (Buffer) => void;
+    onError?: (string) => void;
+    onResponse?: (Response) => void;
+    onDownloadProgress?: (any) => void;
+    onUploadProgress?: (any) => void;
+}
+
 export interface PayloadRequest {
     method: PayloadMethod;
     url: string;

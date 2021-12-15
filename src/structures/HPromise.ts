@@ -1,5 +1,4 @@
 import * as events from 'events';
-import { EventEmitter } from 'events';
 import { HPromiseEvents } from '../util/constants';
 
 export class HPromise<T> extends Promise<T> {
@@ -18,6 +17,6 @@ export class HPromise<T> extends Promise<T> {
     }
 
     emit(name, ...args) {
-        return this._emit(name, ...args)
+        return this._emit(name, ...args);
     }
 }

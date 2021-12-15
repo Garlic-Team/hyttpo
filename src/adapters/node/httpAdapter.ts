@@ -75,7 +75,7 @@ export const httpAdapter = (data: PayloadRequest, methods: Array<string>): HProm
             request: res,
             statusCode: res.statusCode,
             statusMessage: res.statusMessage,
-            headers: res.headers
+            headers: res.headers,
         });
 
         if (data.trackRedirects) {
@@ -145,7 +145,7 @@ export const httpAdapter = (data: PayloadRequest, methods: Array<string>): HProm
         rejects(error);
     });
 
-    req.on('response', (message) => promise.emit('response', new Response(message)) && data.onResponse?.(new Response(message)));
+    req.on('response', message => promise.emit('response', new Response(message)) && data.onResponse?.(new Response(message)));
 
     if (body && method !== 'GET') {
         if (Utils.isObject(body) && (body?.constructor?.name === 'FormData' || Utils.isStream(body))) {
@@ -157,4 +157,4 @@ export const httpAdapter = (data: PayloadRequest, methods: Array<string>): HProm
     }
 
     return promise as HPromise<Response>;
-}
+};

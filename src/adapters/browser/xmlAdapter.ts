@@ -59,13 +59,41 @@ export const xmlAdapter = (data: PayloadRequest): HPromise<Response> => {
         };
     }
 
-    request.onloadstart = event => promise.emit('response', event) && data.onResponse?.(event);
-    request.onprogress = event => promise.emit('downloadProgress', event) && data.onDownloadProgress?.(event);
-    request.upload.onprogress = event => promise.emit('uploadProgress', event) && data.onUploadProgress?.(event);
+    request.onloadstart = event => {
+        promise.emit('response', event)
+        data.onResponse?.(event);
+    }
 
-    request.onabort = () => request && promise.emit('error', 'Request aborted') && rejects('Request aborted') && data.onError?.('Request aborted');
-    request.onerror = () => request && promise.emit('error', 'Network Error') && rejects('Network Error') && data.onError?.('Network Error');
-    request.ontimeout = () => request && promise.emit('error', 'Request timeout') && rejects('Request timeouted') && data.onError?.('Request timeouted');
+    request.onprogress = event => {
+        promise.emit('downloadProgress', event)
+        data.onDownloadProgress?.(event);
+    }
+
+    request.upload.onprogress = event => {
+        promise.emit('uploadProgress', event)
+        data.onUploadProgress?.(event);
+    }
+
+    request.onabort = () => {
+        if (!request) return;
+        promise.emit('error', 'Request aborted');
+        data.onError?.('Request aborted');
+        rejects('Request aborted');
+    }
+
+    request.onerror = () => {
+        if (!request) return;
+        promise.emit('error', 'Network Error');
+        data.onError?.('Network Error');
+        rejects('Network Error');
+    }
+
+    request.ontimeout = () => {
+        if (!request) return; 
+        promise.emit('error', 'Request timeout');
+        data.onError?.('Request timeouted');
+        rejects('Request timeouted');
+    }
 
     if ('setRequestHeader' in request) {
         for (const [key, value] of Object.entries(headers)) {

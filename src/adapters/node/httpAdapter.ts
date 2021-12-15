@@ -84,8 +84,14 @@ export const httpAdapter = (data: PayloadRequest, methods: Array<string>): HProm
         }
 
         if (data.responseType === 'stream') {
-            stream.on('data', chunk => promise.emit('data', chunk) && data.onData?.(chunk));
-            stream.on('end', () => promise.emit('end', stream) && data.onEnd?.(stream));
+            stream.on('data', chunk => {
+                promise.emit('data', chunk);
+                data.onData?.(chunk);
+            });
+            stream.on('end', () => {
+                promise.emit('end', stream);
+                data.onEnd?.(stream);
+            });
 
             response.data = stream;
 
@@ -145,7 +151,10 @@ export const httpAdapter = (data: PayloadRequest, methods: Array<string>): HProm
         rejects(error);
     });
 
-    req.on('response', message => promise.emit('response', new Response(message)) && data.onResponse?.(new Response(message)));
+    req.on('response', message => {
+        promise.emit('response', new Response(message)) 
+        data.onResponse?.(new Response(message))
+    });
 
     if (body && method !== 'GET') {
         if (Utils.isObject(body) && (body?.constructor?.name === 'FormData' || Utils.isStream(body))) {

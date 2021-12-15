@@ -67,6 +67,13 @@ export const xmlAdapter = (data: PayloadRequest): HPromise<Response> => {
     request.onerror = () => request && promise.emit('error', 'Network Error') && rejects('Network Error') && data.onError?.('Network Error');
     request.ontimeout = () => request && promise.emit('error', 'Request timeout') && rejects('Request timeouted') && data.onError?.('Request timeouted');
 
+    if ('setRequestHeader' in request) {
+        for (const [key, value] of Object.entries(headers)) {
+            if (typeof data === 'undefined' && key.toLowerCase() === 'content-type') delete headers[key];
+            else request.setRequestHeader(key, value as string)
+        }
+    }  
+
     // eslint-disable-next-line  @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (data.responseType && data.responseType.toLowerCase() !== 'json') request.responseType = data.responseType.toLowerCase();

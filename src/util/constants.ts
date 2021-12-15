@@ -42,6 +42,16 @@ export interface RequestOptions {
     maxBodyLength?: number;
 }
 
+export interface ResponseOptions {
+    request?: object;
+    statusCode?: number;
+    statusMessage?: string;
+    headers?: object;
+    data?: any;
+    responseUrl?: string;
+    redirects?: Array<Redirect>;
+}
+
 export interface Redirect {
     url: string;
     statusCode: number;

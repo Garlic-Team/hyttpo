@@ -73,7 +73,7 @@ export const httpAdapter = (data, methods): HPromise<Response> => {
         const response = new Response({
             request: res,
             statusCode: res.statusCode,
-            statusuMessage: res.statusMessage,
+            statusMessage: res.statusMessage,
             headers: res.headers
         });
 

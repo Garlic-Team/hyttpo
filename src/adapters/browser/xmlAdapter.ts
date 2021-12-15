@@ -38,7 +38,7 @@ export const xmlAdapter = (data): HPromise<Response> => {
         const response = new Response({
             request: request,
             statusCode: request.status,
-            statusuMessage: request.statusText,
+            statusMessage: request.statusText,
             headers: responseHeaders,
             responseUrl: request.responseURL,
             data: responseData

@@ -1,14 +1,14 @@
-import { Redirect } from '../util/constants';
+import { Redirect, ResponseOptions } from '../util/constants';
 
 export class Response {
     public request?: object;
     public status?: number;
     public statusText?: string;
     public headers?: object;
-    public data?: string;
+    public data?: any;
     public responseUrl?: string;
     public redirects?: Array<Redirect>;
-    constructor(options?) {
+    constructor(options?: ResponseOptions) {
         if ('request' in options) this.request = options.request;
 
         if ('statusCode' in options) this.status = options.statusCode;
@@ -34,7 +34,7 @@ export class Response {
     }
 
     json(): object {
-        return JSON.parse(this.data);
+        return typeof this.data !== 'object' ? JSON.parse(this.data) : this.data;
     }
 
     text(): string {

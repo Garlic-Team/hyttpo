@@ -10,7 +10,7 @@ const methods = ['GET', 'POST', 'PATCH', 'PUT', 'TRACE', 'HEAD', 'OPTIONS', 'CON
 export class Hyttpo {
     constructor() {
         methods.forEach(method => {
-            this[method.toLocaleLowerCase()] = (url, data: PayloadRequestAliases) => {
+            this[method.toLocaleLowerCase()] = (url, data: PayloadRequestAliases = {}) => {
                 if (typeof url === 'object') data = url;
                 if (!data.url) data.url = url;
 

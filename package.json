@@ -2,10 +2,10 @@
   "name": "hyttpo",
   "version": "0.3.1",
   "description": "Easy way to send requests for node.js and browser",
-  "main": "./dist/js/index.js",
-  "browser": "./dist/webpack/index.js",
-  "unpkg": "./dist/webpack/index.js",
-  "types": "./dist/js/index.d.ts",
+  "main": "dist/js/index.js",
+  "browser": "dist/webpack/index.js",
+  "unpkg": "dist/webpack/index.js",
+  "types": "dist/js/index.d.ts",
   "homepage": "https://garlic-team.js.org/guide/hyttpo",
   "bugs": {
     "url": "https://github.com/Garlic-Team/hyttpo/issues"

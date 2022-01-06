@@ -7,12 +7,12 @@ export const xmlAdapter = (data: PayloadRequest): HPromise<Response> => {
     let resolves;
     let rejects;
 
-    const promise: any = new HPromise((resolve, reject) => {
+    const promise: HPromise<unknown> = new HPromise((resolve, reject) => {
         resolves = resolve;
         rejects = reject;
     });
 
-    const headers: any = data.headers ? Utils.stringsToLowerCase(data.headers as { [key: string]: unknown; }) : {};
+    const headers: { [key: string]: unknown } = data.headers ? Utils.stringsToLowerCase(data.headers as { [key: string]: unknown; }) : {};
     const body = data.body || null;
 
     if (Utils.isFormData(body)) delete headers['Content-Type'];
@@ -60,47 +60,47 @@ export const xmlAdapter = (data: PayloadRequest): HPromise<Response> => {
     }
 
     request.onloadstart = event => {
-        promise.emit('response', event)
+        promise.emit('response', event);
         data.onResponse?.(event);
-    }
+    };
 
     request.onprogress = event => {
-        promise.emit('downloadProgress', event)
+        promise.emit('downloadProgress', event);
         data.onDownloadProgress?.(event);
-    }
+    };
 
     request.upload.onprogress = event => {
-        promise.emit('uploadProgress', event)
+        promise.emit('uploadProgress', event);
         data.onUploadProgress?.(event);
-    }
+    };
 
     request.onabort = () => {
         if (!request) return;
         promise.emit('error', 'Request aborted');
         data.onError?.('Request aborted');
         rejects('Request aborted');
-    }
+    };
 
     request.onerror = () => {
         if (!request) return;
         promise.emit('error', 'Network Error');
         data.onError?.('Network Error');
         rejects('Network Error');
-    }
+    };
 
     request.ontimeout = () => {
-        if (!request) return; 
+        if (!request) return;
         promise.emit('error', 'Request timeout');
         data.onError?.('Request timeouted');
         rejects('Request timeouted');
-    }
+    };
 
     if ('setRequestHeader' in request) {
         for (const [key, value] of Object.entries(headers)) {
             if (typeof data === 'undefined' && key.toLowerCase() === 'content-type') delete headers[key];
-            else request.setRequestHeader(key, value as string)
+            else request.setRequestHeader(key, value as string);
         }
-    }  
+    }
 
     // eslint-disable-next-line  @typescript-eslint/ban-ts-comment
     // @ts-ignore

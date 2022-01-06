@@ -12,7 +12,7 @@ export const httpAdapter = (data: PayloadRequest, methods: Array<string>): HProm
     let resolves;
     let rejects;
 
-    const promise: any = new HPromise((resolve, reject) => {
+    const promise: HPromise<unknown> = new HPromise((resolve, reject) => {
         resolves = resolve;
         rejects = reject;
     });
@@ -36,8 +36,8 @@ export const httpAdapter = (data: PayloadRequest, methods: Array<string>): HProm
 
     const body = data.body;
 
-    const headers: any = data.headers ? Utils.stringsToLowerCase(data.headers as { [key: string]: unknown; }) : {};
-    
+    const headers: { [key: string]: unknown } = data.headers ? Utils.stringsToLowerCase(data.headers as { [key: string]: unknown; }) : {};
+
     if (!headers.accept) headers.accept = 'application/json, text/plain, */*';
     if (!headers['user-agent']) headers['user-agent'] = 'hyttpo/nodejs (+https://github.com/Garlic-Team/hyttpo)';
 
@@ -153,8 +153,8 @@ export const httpAdapter = (data: PayloadRequest, methods: Array<string>): HProm
     });
 
     req.on('response', message => {
-        promise.emit('response', new Response(message)) 
-        data.onResponse?.(new Response(message))
+        promise.emit('response', new Response(message));
+        data.onResponse?.(new Response(message));
     });
 
     if (body && method !== 'GET') {

@@ -12,6 +12,7 @@ export class HPromise<T> extends Promise<T> {
         this._emit = emitter.emit;
     }
 
+    // eslint-disable-next-line no-unused-vars
     on<K extends keyof HPromiseEvents>(event: K, listener: (args: HPromiseEvents[K]) => void) {
         return this._on(event, listener);
     }

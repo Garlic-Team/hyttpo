@@ -1,0 +1,6 @@
+dist/
+node_modules/
+.github/
+webpack.config.js
+babel.config.js
+src/util/constants.ts

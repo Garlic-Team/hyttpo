@@ -32,7 +32,7 @@ export interface PayloadRequestAliases {
     onEnd?: (any) => void;
     onData?: (Buffer) => void;
     onError?: (string) => void;
-    onResponse?: (Response) => void;
+    onResponse?: (res) => void;
     onDownloadProgress?: (any) => void;
     onUploadProgress?: (any) => void;
 }
@@ -54,7 +54,7 @@ export interface PayloadRequest {
     onEnd?: (any) => void;
     onData?: (Buffer) => void;
     onError?: (string) => void;
-    onResponse?: (Response) => void;
+    onResponse?: (res) => void;
     onDownloadProgress?: (any) => void;
     onUploadProgress?: (any) => void;
 }

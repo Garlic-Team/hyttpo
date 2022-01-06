@@ -12,7 +12,7 @@ export const xmlAdapter = (data: PayloadRequest): HPromise<Response> => {
         rejects = reject;
     });
 
-    const headers: any = data.headers || {};
+    const headers: any = data.headers ? Utils.stringsToLowerCase(data.headers as { [key: string]: unknown; }) : {};
     const body = data.body || null;
 
     if (Utils.isFormData(body)) delete headers['Content-Type'];
@@ -27,8 +27,8 @@ export const xmlAdapter = (data: PayloadRequest): HPromise<Response> => {
     const onLoadEnd = () => {
         if (!request) return;
 
-        if (!headers.Accept) headers.Accept = 'application/json, text/plain, */*';
-        if (!headers['User-Agent']) headers['User-Agent'] = 'hyttpo/nodejs (+https://github.com/Garlic-Team/hyttpo)';
+        if (!headers.accept) headers.accept = 'application/json, text/plain, */*';
+        if (!headers['user-agent']) headers['user-agent'] = 'hyttpo/XMLHttp (+https://github.com/Garlic-Team/hyttpo)';
 
         const responseHeaders = 'getAllResponseHeaders' in request ? Utils.parseHeaders(request.getAllResponseHeaders()) : null;
         let responseData = !data.responseType || data.responseType === 'text' || data.responseType === 'json' ? request.responseText : request.response;

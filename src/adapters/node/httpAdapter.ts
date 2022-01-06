@@ -36,9 +36,10 @@ export const httpAdapter = (data: PayloadRequest, methods: Array<string>): HProm
 
     const body = data.body;
 
-    const headers: any = data.headers || {};
-    if (!headers.Accept) headers.Accept = 'application/json, text/plain, */*';
-    if (!headers['User-Agent']) headers['User-Agent'] = 'hyttpo/nodejs (+https://github.com/Garlic-Team/hyttpo)';
+    const headers: any = data.headers ? Utils.stringsToLowerCase(data.headers as { [key: string]: unknown; }) : {};
+    
+    if (!headers.accept) headers.accept = 'application/json, text/plain, */*';
+    if (!headers['user-agent']) headers['user-agent'] = 'hyttpo/nodejs (+https://github.com/Garlic-Team/hyttpo)';
 
     if (methods.includes(method) && method !== 'GET') request = request.request;
     else request = request[method.toLowerCase()];

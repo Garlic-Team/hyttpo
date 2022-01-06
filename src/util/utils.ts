@@ -106,6 +106,16 @@ class Util {
             onUploadProgress: data.onUploadProgress,
         };
     }
+
+    static stringsToLowerCase<T>(object: { [key: string]: T }): { [key: string]: T } {
+        const result: { [key: string]: T } = {};
+
+        for (const [key, value] of Object.entries(object)) {
+          result[key.toLowerCase()] = value;
+        }
+      
+        return result;
+    }
 }
 
 export default Util;

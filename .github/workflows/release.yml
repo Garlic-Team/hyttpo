@@ -9,14 +9,15 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: node
+
+      - name: Install Node v16
         uses: actions/setup-node@v2
         with:
-          node-version: 12
+          node-version: 16
           registry-url: https://registry.npmjs.org/
 
       - name: Install
-        run: npm install --save-dev @babel/cli @babel/core @babel/preset-env @babel/preset-typescript babel-plugin-add-module-exports typescript @types/node
+        run: npm ci
 
       - name: build
         run: npm run build

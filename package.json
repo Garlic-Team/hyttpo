@@ -17,6 +17,7 @@
   "author": "Garlic Team",
   "license": "ISC",
   "scripts": {
+    "lint": "npx eslint .",
     "build": "bash scripts/build.bash",
     "build:babel": "npx babel --extensions .ts ./src -d ./dist/js --minified",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/js/",

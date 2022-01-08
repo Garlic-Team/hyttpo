@@ -1,6 +1,7 @@
-dist/
 node_modules/
+example/
+test/
+*.js
+*.js.map
+dist/
 .github/
-webpack.config.js
-babel.config.js
-src/util/constants.ts

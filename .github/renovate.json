@@ -4,11 +4,5 @@
   ],
   "labels": [
     "dependencies"
-  ],
-  "patch": {
-    "appendLabels": [
-      "automerge"
-    ],
-    "automerge": true
-  }
+  ]
 }

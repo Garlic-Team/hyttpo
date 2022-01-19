@@ -26,8 +26,8 @@
   },
   "devDependencies": {
     "@babel/cli": "7.16.8",
-    "@babel/core": "7.16.7",
-    "@babel/preset-env": "7.16.8",
+    "@babel/core": "7.16.10",
+    "@babel/preset-env": "7.16.10",
     "@babel/preset-typescript": "7.16.7",
     "@discordjs/ts-docgen": "0.3.4",
     "@types/eslint": "8.2.2",

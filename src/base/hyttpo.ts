@@ -37,29 +37,29 @@ export class Hyttpo {
 
 	/* eslint-disable  @typescript-eslint/ban-ts-comment, @typescript-eslint/no-unused-vars, no-unused-vars, @typescript-eslint/no-empty-function, no-empty-function */
 	// @ts-ignore
-	get(url: string, data?: PayloadRequest): HPromise<Response> {}
+	get(url: string, data?: PayloadRequestAliases): HPromise<Response> {}
 	// @ts-ignore
-	post(url: string, data?: PayloadRequest): HPromise<Response> {}
+	post(url: string, data?: PayloadRequestAliases): HPromise<Response> {}
 	// @ts-ignore
-	patch(url: string, data?: PayloadRequest): HPromise<Response> {}
+	patch(url: string, data?: PayloadRequestAliases): HPromise<Response> {}
 	// @ts-ignore
-	put(url: string, data?: PayloadRequest): HPromise<Response> {}
+	put(url: string, data?: PayloadRequestAliases): HPromise<Response> {}
 	// @ts-ignore
-	trace(url: string, data?: PayloadRequest): HPromise<Response> {}
+	trace(url: string, data?: PayloadRequestAliases): HPromise<Response> {}
 	// @ts-ignore
-	head(url: string, data?: PayloadRequest): HPromise<Response> {}
+	head(url: string, data?: PayloadRequestAliases): HPromise<Response> {}
 	// @ts-ignore
-	options(url: string, data?: PayloadRequest): HPromise<Response> {}
+	options(url: string, data?: PayloadRequestAliases): HPromise<Response> {}
 	// @ts-ignore
-	connect(url: string, data?: PayloadRequest): HPromise<Response> {}
+	connect(url: string, data?: PayloadRequestAliases): HPromise<Response> {}
 	// @ts-ignore
-	delete(url: string, data?: PayloadRequest): HPromise<Response> {}
+	delete(url: string, data?: PayloadRequestAliases): HPromise<Response> {}
 	// @ts-ignore
-	search(url: string, data?: PayloadRequest): HPromise<Response> {}
+	search(url: string, data?: PayloadRequestAliases): HPromise<Response> {}
 	// @ts-ignore
-	purge(url: string, data?: PayloadRequest): HPromise<Response> {}
+	purge(url: string, data?: PayloadRequestAliases): HPromise<Response> {}
 	// @ts-ignore
-	link(url: string, data?: PayloadRequest): HPromise<Response> {}
+	link(url: string, data?: PayloadRequestAliases): HPromise<Response> {}
 	// @ts-ignore
-	unlink(url: string, data?: PayloadRequest): HPromise<Response> {}
+	unlink(url: string, data?: PayloadRequestAliases): HPromise<Response> {}
 }

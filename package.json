@@ -1,6 +1,6 @@
 {
   "name": "hyttpo",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Easy way to send requests for node.js and browser",
   "main": "dist/js/index.js",
   "browser": "dist/webpack/index.js",

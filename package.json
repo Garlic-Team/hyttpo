@@ -48,7 +48,7 @@
     "webpack-cli": "4.9.2"
   },
   "dependencies": {
-    "follow-redirects": "^1.14.7"
+    "follow-redirects": "^1.14.8"
   },
   "engines": {
     "node": ">=16.x"

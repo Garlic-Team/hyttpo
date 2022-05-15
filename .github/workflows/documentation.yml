@@ -20,7 +20,7 @@ jobs:
       SHA: ${{ steps.env.outputs.SHA }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install Node v16
         uses: actions/setup-node@v3
@@ -63,7 +63,7 @@ jobs:
           path: docs
 
       - name: Checkout docs repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: 'garlic-team/docs'
           token: ${{ secrets.ACCESS_TOKEN }}

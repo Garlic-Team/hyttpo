@@ -29,7 +29,7 @@
     "@babel/core": "7.17.5",
     "@babel/preset-env": "7.16.11",
     "@babel/preset-typescript": "7.16.7",
-    "@discordjs/ts-docgen": "0.3.4",
+    "@discordjs/ts-docgen": "0.4.1",
     "@types/eslint": "8.4.1",
     "@types/estree": "0.0.51",
     "@types/node": "16.11.26",

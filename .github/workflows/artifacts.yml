@@ -27,7 +27,7 @@ jobs:
           variable=$(jq --raw-output '.version' package.json)
           echo ::set-output name=version::$variable
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.get_version.outputs.version }}
           path: |

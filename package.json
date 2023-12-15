@@ -31,7 +31,7 @@
     "@babel/preset-typescript": "7.16.7",
     "@discordjs/ts-docgen": "0.3.4",
     "@types/eslint": "8.4.1",
-    "@types/estree": "0.0.51",
+    "@types/estree": "0.0.52",
     "@types/node": "16.11.26",
     "@typescript-eslint/eslint-plugin": "5.12.1",
     "@typescript-eslint/parser": "5.12.1",

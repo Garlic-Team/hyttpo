@@ -25,10 +25,10 @@
     "build:docs": "typedoc --json docs/out-master.json src/index.ts && node scripts/docs.mjs"
   },
   "devDependencies": {
-    "@babel/cli": "7.17.6",
-    "@babel/core": "7.17.5",
-    "@babel/preset-env": "7.16.11",
-    "@babel/preset-typescript": "7.16.7",
+    "@babel/cli": "7.24.1",
+    "@babel/core": "7.24.3",
+    "@babel/preset-env": "7.24.3",
+    "@babel/preset-typescript": "7.24.1",
     "@discordjs/ts-docgen": "0.3.4",
     "@types/eslint": "8.4.1",
     "@types/estree": "0.0.51",
